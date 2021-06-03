@@ -16,19 +16,29 @@ public class StartApp {
 	public static void main(String[] args) {
 		
 		FileInputStream file = null;
-		JogoLoto listaLoto = new JogoLoto();
-		FileReader(file, listaLoto);		
+		List<JogoLoto> ListLoto = new ArrayList<>();
+		ListLoto = FileReader(file);		
 		
-		System.out.println(listaLoto.getDate());
-		System.out.println(listaLoto.getYear());
-		for (String joguinho: listaLoto.getNumbers()) {
+		for (JogoLoto loto: ListLoto) {
 			
-			System.out.println(joguinho);
+			System.out.println("---------------------------------------------------------------");
 			
+			System.out.println(loto.getDate());
+			System.out.println(loto.getYear());
+			for (String number: loto.getNumbers()) {
+				
+				System.out.println(number);
+				
+			}
 		}
+		
+		
 	}
 	
-	public static void FileReader (FileInputStream file, JogoLoto jogo) {
+	public static List <JogoLoto>FileReader (FileInputStream file) {
+		
+		List<JogoLoto> ListJogo = new ArrayList<>();
+		
 		
 		try {
 			
@@ -40,6 +50,9 @@ public class StartApp {
 				String line ; 
 								
 				do {
+					
+					JogoLoto jogo = new JogoLoto();
+					
 					line = buf.readLine();
 					if (line != null) {
 
@@ -53,8 +66,8 @@ public class StartApp {
 							jogo.setNumbers(auxs[i]);
 							
 						}
+						ListJogo.add(jogo);
 					}
-					
 				}
 				while (line != null) ;
 			}
@@ -62,6 +75,8 @@ public class StartApp {
 		}catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		return ListJogo;
 		
 	}
 	
