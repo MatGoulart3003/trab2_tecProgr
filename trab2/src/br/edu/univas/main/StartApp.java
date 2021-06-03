@@ -8,15 +8,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.univas.vo.JogoLoto;
-
+import br.edu.univas.vo.*;
 
 public class StartApp {
 	
 	public static void main(String[] args) {
 		
-		FileInputStream file = null;
-		List<JogoLoto> ListLoto = new ArrayList<>();
+		FileInputStream file      = null;
+		
+		List<JogoLoto> ListLoto   = new ArrayList<>();
+		List<JogoMega> ListMega   = new ArrayList<>();
+		List<JogoQuina> ListQuina = new ArrayList<>();		
+		
 		ListLoto = FileReader(file);		
 		
 		for (JogoLoto loto: ListLoto) {
@@ -42,7 +45,7 @@ public class StartApp {
 		
 		try {
 			
-			file = new FileInputStream ("Files\\lotofacil.csv");
+			file                    = new FileInputStream ("Files\\lotofacil.csv");
 			InputStreamReader input = new InputStreamReader(file);
 			
 			try (BufferedReader buf = new BufferedReader (input)) {
@@ -52,8 +55,8 @@ public class StartApp {
 				do {
 					
 					JogoLoto jogo = new JogoLoto();
+					line          = buf.readLine();
 					
-					line = buf.readLine();
 					if (line != null) {
 
 						String[] auxs = line.split(",");
