@@ -24,7 +24,7 @@ public class StartApp {
 		
 		for (JogoLoto loto: ListLoto) {
 			
-			System.out.println("---------------------------------------------------------------");
+			System.out.println("-----------------cxscx----------------------------------------------");
 			
 			System.out.println(loto.getDate());
 			System.out.println(loto.getYear());
