@@ -24,18 +24,6 @@ public class StartApp {
 		ListMega  =   ReadMega(file);
 		ListQuina = ReadQuina (file);
 		
-		for (JogoLoto loto: ListLoto) {
-			
-			System.out.println("---------------------------------------------------------------");
-			
-			System.out.println(loto.getDate());
-			System.out.println(loto.getYear());
-			for (String number: loto.getNumbers()) {
-				
-				System.out.println(number);
-				
-			}
-		}
 		
 		
 	}
