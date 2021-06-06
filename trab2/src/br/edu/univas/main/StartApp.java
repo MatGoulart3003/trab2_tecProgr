@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +22,8 @@ public class StartApp {
 		int aux;
 		View view                 = new View();
 		FileInputStream file      = null;
-				
+		
+		
 		List<JogoLoto> ListLoto   = new ArrayList<>();
 		List<JogoMega> ListMega   = new ArrayList<>();
 		List<JogoQuina> ListQuina = new ArrayList<>();		
@@ -28,6 +31,8 @@ public class StartApp {
 		ListLoto  =   ReadLoto(file);		
 		ListMega  =   ReadMega(file);
 		ListQuina = ReadQuina (file);
+	
+		
 		
 		do {
 			
@@ -193,19 +198,19 @@ public class StartApp {
 				
 			view.PrintMenuSec();	
 			aux = ReadInt(scan);
-			MenuSec(aux, view);
+			MenuSec(aux, view, 6, 60);
 
 		}else if (aux == 2) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view);
+			MenuSec(aux, view, 5, 80);
 			
 		}else if (aux == 3) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view);
+			MenuSec(aux, view,15,25);
 
 		}else if (aux != 9) {
 			
@@ -215,9 +220,8 @@ public class StartApp {
 		
 	}
 
-	public static void MenuSec (int aux, View view) {
-		
-		
+	public static void MenuSec (int aux, View view, int numSort, int numMaxSort) {
+				
 		if       (aux == 1) {
 				
 			System.out.println("teste 1");	
@@ -228,7 +232,7 @@ public class StartApp {
 				
 		}else if (aux == 3) {
 				
-			System.out.println("teste 3");	
+			RandomNumber(numSort,numMaxSort);
 							
 		}else if (aux == 4) {
 				
@@ -239,8 +243,39 @@ public class StartApp {
 			view.PrintInvalidOption();
 			
 		}
-			
-		
-		
+					
 	}
+
+	public static void RandomNumber (int numSort, int numMaxSort) {
+		
+		DecimalFormat formatter = new DecimalFormat("00");
+		
+		List<Integer> listAll   = new ArrayList<>();
+		List<Integer> list      = new ArrayList<>();
+		
+		for (int i = 0; i < numMaxSort; i++) {
+			
+			listAll.add(i+1);
+			
+		}
+		
+		for(int i = 0; i < numSort; i++) {
+			
+			Integer number = 0 + (int) (Math.random() * listAll.size());
+			
+			int aux = listAll.get(number);
+			listAll.remove(number);
+			list.add(aux);
+			
+		}
+		
+		for (Integer num : list) {
+			String aFormatted = formatter.format(num);
+			System.out.print(aFormatted + " ");
+		} 
+		System.out.println("");
+	}
+	
+	
+
 } 
