@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -32,16 +33,16 @@ public class StartApp {
 		ListMega  =   ReadMega(file);
 		ListQuina = ReadQuina (file);
 	
+		searchNumMin(ListLoto,ListMega,ListQuina );
 		
-		
-		do {
-			
-			view.PrintMenuMain();
-			aux = ReadInt(scan);
-			MainMenu(aux,view, scan);
-			
-			
-		}while (aux != 9);
+	//	do {
+	//		
+	//		view.PrintMenuMain();
+	//		aux = ReadInt(scan);
+	//		MainMenu(aux,view, scan);
+	//		
+	//		
+	//	}while (aux != 9);
 		
 		
 		
@@ -276,6 +277,47 @@ public class StartApp {
 		System.out.println("");
 	}
 	
-	
+	public static void searchNumMin (List<JogoLoto> ListLoto, List<JogoMega> ListMega,List<JogoQuina> ListQuina ) {
+		
+		DecimalFormat formatter      = new DecimalFormat("00");
+		List<ContNumbers> numMegaAll = new ArrayList<>();
+		
+		
+		for(int i = 0; i < 60; i++) {
+			
+			ContNumbers aux = new  ContNumbers ();
+			String aFormatted = formatter.format(i+1);
+			aux.setNumero(aFormatted);
+			numMegaAll.add(aux);
+
+		}
+		
+		for(JogoMega jogosMega : ListMega) {
+			
+			for (String jogo   : jogosMega.getNumbers()) {
+				
+				for (int i = 0; i < 60; i++) {
+					
+					if (jogo.equals(numMegaAll.get(i).getNumero())) {
+						
+						numMegaAll.get(i).setContador();
+						
+					}
+					
+				}
+				
+			}
+				
+		}
+		
+		Collections.sort(numMegaAll);
+		
+		for (ContNumbers num : numMegaAll) {
+			
+			System.out.print(num.getContador() + " ");
+			
+		}
+		
+	}
 
 } 
