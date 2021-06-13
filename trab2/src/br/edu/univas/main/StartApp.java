@@ -1,6 +1,5 @@
 package br.edu.univas.main;
 
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,32 +16,34 @@ import br.edu.univas.vo.*;
 
 public class StartApp {
 	
+	static FileInputStream file      = null;
+	
+	
+	static List<JogoLoto> ListLoto   = new ArrayList<>();
+	static List<JogoMega> ListMega   = new ArrayList<>();
+	static List<JogoQuina> ListQuina = new ArrayList<>();
+	
 	public static void main(String[] args) {
 		
 		Scanner scan              = new Scanner (System.in);
 		int aux;
 		View view                 = new View();
-		FileInputStream file      = null;
-		
-		
-		List<JogoLoto> ListLoto   = new ArrayList<>();
-		List<JogoMega> ListMega   = new ArrayList<>();
-		List<JogoQuina> ListQuina = new ArrayList<>();		
+				
 		
 		ListLoto  =   ReadLoto(file);		
 		ListMega  =   ReadMega(file);
 		ListQuina = ReadQuina (file);
 	
-		searchNumMin(ListLoto,ListMega,ListQuina );
 		
-	//	do {
-	//		
-	//		view.PrintMenuMain();
-	//		aux = ReadInt(scan);
-	//		MainMenu(aux,view, scan);
-	//		
-	//		
-	//	}while (aux != 9);
+		
+		do {
+			
+			view.PrintMenuMain();
+			aux = ReadInt(scan);
+			MainMenu(aux,view, scan);
+			
+			
+		}while (aux != 9);
 		
 		
 		
@@ -199,19 +200,19 @@ public class StartApp {
 				
 			view.PrintMenuSec();	
 			aux = ReadInt(scan);
-			MenuSec(aux, view, 6, 60);
+			MenuSec(aux, view, 6, 60, aux2);
 
 		}else if (aux == 2) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view, 5, 80);
+			MenuSec(aux, view, 5, 80, aux2);
 			
 		}else if (aux == 3) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view,15,25);
+			MenuSec(aux, view,15,25, aux2);
 
 		}else if (aux != 9) {
 			
@@ -221,15 +222,29 @@ public class StartApp {
 		
 	}
 
-	public static void MenuSec (int aux, View view, int numSort, int numMaxSort) {
+	public static void MenuSec (int aux, View view, int numSort, int numMaxSort, int aux2) {
 				
 		if       (aux == 1) {
 				
-			System.out.println("teste 1");	
+			if (aux2 == 1) {
+				searchNumMinMega();
+			}else if (aux2 == 2) {
+				searchNumMinQuina();
+			}
+			else if (aux2 == 3) {
+				searchNumMinLoto();
+			}
 				
 		}else if (aux == 2) {
 				
-			System.out.println("teste 2");	
+			if (aux2 == 1) {
+				searchNumMaxMega();
+			}else if (aux2 == 2) {
+				searchNumMaxQuina();				
+			}
+			else if (aux2 == 3) {
+				searchNumMaxLoto();
+			}
 				
 		}else if (aux == 3) {
 				
@@ -277,12 +292,102 @@ public class StartApp {
 		System.out.println("");
 	}
 	
-	public static void searchNumMin (List<JogoLoto> ListLoto, List<JogoMega> ListMega,List<JogoQuina> ListQuina ) {
+	public static void searchNumMinMega () {
+		
+		List<ContNumbers> numMegaAll = new ArrayList<>();
+		numMegaAll = sortMega();
+		
+		for (int i = 0; i < 5; i++) {
+			
+			System.out.print(numMegaAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+	}
+	
+	public static void searchNumMaxMega () {
+		
+		List<ContNumbers> numMegaAll = new ArrayList<>();
+		numMegaAll = sortMega();
+		
+		for (int i = 55; i < 60; i++) {
+			
+			System.out.print(numMegaAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+	}
+	
+	public static void searchNumMinLoto () {
+		
+		List<ContNumbers> numLotoAll = new ArrayList<>();
+		numLotoAll = sortLoto();
+		
+		for (int i = 0; i < 5; i++) {
+			
+			System.out.print(numLotoAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+		
+	}
+	
+	public static void searchNumMaxLoto () {
+		
+		List<ContNumbers> numLotoAll = new ArrayList<>();
+		numLotoAll = sortLoto();
+		
+		for (int i = 20; i < 25; i++) {
+			
+			System.out.print(numLotoAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+		
+	}
+	
+	public static void searchNumMinQuina () {
+		
+		List<ContNumbers> numQuinaAll = new ArrayList<>();
+		numQuinaAll = sortQuina();
+		
+		for (int i = 0; i < 5; i++) {
+			
+			System.out.print(numQuinaAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+		
+	}
+	
+	public static void searchNumMaxQuina () {
+		
+		List<ContNumbers> numQuinaAll = new ArrayList<>();
+		numQuinaAll = sortQuina();
+		
+		for (int i = 20; i < 25; i++) {
+			
+			System.out.print(numQuinaAll.get(i).getNumero() + " ");
+			
+		}
+		
+		System.out.println("");
+		
+	
+		
+	}
+	
+	public static List <ContNumbers> sortMega (){
 		
 		DecimalFormat formatter      = new DecimalFormat("00");
 		List<ContNumbers> numMegaAll = new ArrayList<>();
-		
-		
+
+				
 		for(int i = 0; i < 60; i++) {
 			
 			ContNumbers aux = new  ContNumbers ();
@@ -312,12 +417,84 @@ public class StartApp {
 		
 		Collections.sort(numMegaAll);
 		
-		for (ContNumbers num : numMegaAll) {
+		return numMegaAll;
+	}
+	
+	public static List <ContNumbers> sortLoto (){
+		
+		DecimalFormat formatter      = new DecimalFormat("00");
+		List<ContNumbers> numLotoAll = new ArrayList<>();
+
+				
+		for(int i = 0; i < 25; i++) {
 			
-			System.out.print(num.getContador() + " ");
-			
+			ContNumbers aux = new  ContNumbers ();
+			String aFormatted = formatter.format(i+1);
+			aux.setNumero(aFormatted);
+			numLotoAll.add(aux);
+
 		}
 		
+		for(JogoLoto jogosLoto : ListLoto) {
+			
+			for (String jogo   : jogosLoto.getNumbers()) {
+				
+				for (int i = 0; i < 25; i++) {
+					
+					if (jogo.equals(numLotoAll.get(i).getNumero())) {
+						
+						numLotoAll.get(i).setContador();
+						
+					}
+					
+				}
+				
+			}
+				
+		}
+		
+		Collections.sort(numLotoAll);
+		
+		return numLotoAll;
+		
 	}
+	
+	public static List <ContNumbers> sortQuina () {
+		
+		DecimalFormat formatter      = new DecimalFormat("00");
+		List<ContNumbers> numQuinaAll = new ArrayList<>();
 
+				
+		for(int i = 0; i < 80; i++) {
+			
+			ContNumbers aux = new  ContNumbers ();
+			String aFormatted = formatter.format(i+1);
+			aux.setNumero(aFormatted);
+			numQuinaAll.add(aux);
+
+		}
+		
+		for(JogoQuina jogosQuina : ListQuina) {
+			
+			for (String jogo   : jogosQuina.getNumbers()) {
+				
+				for (int i = 0; i < 80; i++) {
+					
+					if (jogo.equals(numQuinaAll.get(i).getNumero())) {
+						
+						numQuinaAll.get(i).setContador();
+						
+					}
+					
+				}
+				
+			}
+				
+		}
+		
+		Collections.sort(numQuinaAll);
+		
+		return numQuinaAll;
+		
+	}
 } 
