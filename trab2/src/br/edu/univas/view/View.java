@@ -35,4 +35,10 @@ public class View {
 		
 	}
 	
+	public void PrintImputNumberGame() {
+		
+		System.out.println("Digite os números deste jogo para a verificação");
+		
+	}
+	
 }

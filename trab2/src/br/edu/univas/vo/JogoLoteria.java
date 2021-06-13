@@ -6,15 +6,15 @@ import java.util.List;
 public class JogoLoteria {
 
 	
-	private String year;
+	private String NumGame;
 	private String date;
 	private List<String> numbers = new ArrayList<>();
 	
-	public String getYear() {
-		return year;
+	public String getNumGame() {
+		return NumGame;
 	}
-	public void setYear(String year) {
-		this.year = year;
+	public void setNumGame(String year) {
+		this.NumGame = year;
 	}
 	public String getDate() {
 		return date;
@@ -31,7 +31,7 @@ public class JogoLoteria {
 	
 	@Override
 	public String toString() {
-		return year + " " + date;
+		return NumGame + " " + date;
 	}
 	
 }

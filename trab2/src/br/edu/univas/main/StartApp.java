@@ -22,12 +22,12 @@ public class StartApp {
 	static List<JogoLoto> ListLoto   = new ArrayList<>();
 	static List<JogoMega> ListMega   = new ArrayList<>();
 	static List<JogoQuina> ListQuina = new ArrayList<>();
-	
+	static View view                 = new View();
 	public static void main(String[] args) {
 		
 		Scanner scan              = new Scanner (System.in);
 		int aux;
-		View view                 = new View();
+		
 				
 		
 		ListLoto  =   ReadLoto(file);		
@@ -72,7 +72,7 @@ public class StartApp {
 
 						String[] auxs = line.split(",");
 						
-						jogo.setYear(auxs[0]);
+						jogo.setNumGame(auxs[0]);
 						jogo.setDate(auxs[1]);
 						
 						for (int i = 2; i < auxs.length;i++) {
@@ -117,7 +117,7 @@ public class StartApp {
 
 						String[] auxs = line.split(",");
 						
-						jogo.setYear(auxs[0]);
+						jogo.setNumGame(auxs[0]);
 						jogo.setDate(auxs[1]);
 						
 						for (int i = 2; i < auxs.length;i++) {
@@ -162,7 +162,7 @@ public class StartApp {
 
 						String[] auxs = line.split(",");
 						
-						jogo.setYear(auxs[0]);
+						jogo.setNumGame(auxs[0]);
 						jogo.setDate(auxs[1]);
 						
 						for (int i = 2; i < auxs.length;i++) {
@@ -200,19 +200,19 @@ public class StartApp {
 				
 			view.PrintMenuSec();	
 			aux = ReadInt(scan);
-			MenuSec(aux, view, 6, 60, aux2);
+			MenuSec(aux, view, 6, 60, aux2, scan);
 
 		}else if (aux == 2) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view, 5, 80, aux2);
+			MenuSec(aux, view, 5, 80, aux2, scan);
 			
 		}else if (aux == 3) {
 			
 			view.PrintMenuSec();
 			aux = ReadInt(scan);
-			MenuSec(aux, view,15,25, aux2);
+			MenuSec(aux, view,15,25, aux2, scan);
 
 		}else if (aux != 9) {
 			
@@ -222,9 +222,9 @@ public class StartApp {
 		
 	}
 
-	public static void MenuSec (int aux, View view, int numSort, int numMaxSort, int aux2) {
+	public static void MenuSec (int aux, View view, int numSort, int numMaxSort, int aux2, Scanner scan) {
 				
-		if       (aux == 1) {
+		if (aux == 1) {
 				
 			if (aux2 == 1) {
 				searchNumMinMega();
@@ -252,7 +252,7 @@ public class StartApp {
 							
 		}else if (aux == 4) {
 				
-			System.out.println("teste 4");	
+			SearchGame(aux2, scan);	
 				
 		}else if (aux > 5 || aux < 1) {
 			
@@ -497,4 +497,98 @@ public class StartApp {
 		return numQuinaAll;
 		
 	}
+
+	public static void SearchGame (int aux2, Scanner scan) {
+		
+		DecimalFormat formatter = new DecimalFormat("00");
+		List <String> sequencia = new ArrayList<>();
+		int mega = 6;int quina = 5;int loto = 15;int cont = 0;
+				
+		if (aux2 == 1) {
+			
+			view.PrintImputNumberGame();
+			
+			forzin2(mega, formatter, scan, sequencia);
+			for(JogoMega jogo: ListMega ) {
+				
+				cont = forzin(jogo, sequencia, cont, mega);
+				
+				if (cont >= 3) {
+					
+					System.out.println("No jogo " + jogo.getNumGame() + " você acertaria " + cont + " numeros");
+					
+				}
+				cont = 0;
+			}
+			
+			
+		}else if (aux2 == 2) {
+			
+			view.PrintImputNumberGame();
+			
+			forzin2(quina, formatter, scan,sequencia);
+			for(JogoQuina jogo: ListQuina ) {
+				
+				cont = forzin(jogo, sequencia, cont, quina);
+				
+				if (cont >= 2) {
+					
+					System.out.println("No jogo " + jogo.getNumGame() + " você acertaria " + cont + " numeros");
+					
+				}
+				cont = 0;
+			}
+			
+		}else if (aux2 == 3) {
+			
+			view.PrintImputNumberGame();
+			
+			forzin2(loto, formatter, scan,sequencia);
+			for(JogoLoto jogo: ListLoto ) {
+				
+				cont = forzin(jogo, sequencia, cont, loto);
+				
+				if (cont >= 11) {
+					
+					System.out.println("No jogo " + jogo.getNumGame() + " você acertaria " + cont + " numeros");
+					
+				}
+				cont = 0;
+			}
+			
+			
+		}
+		
+		
+	}
+	
+	public static int forzin (JogoLoteria jogo, List <String> sequencia, int cont, int game) {
+		
+		for (String current: jogo.getNumbers()) {
+			
+			for (int i = 0; i < game; i++) {
+				
+				if (sequencia.get(i).equals(current)) {
+					
+					cont++;
+					
+				}
+				
+			}
+		
+							
+		}
+		
+		return cont;
+	}
+	
+	public static void forzin2 (int game, DecimalFormat formatter, Scanner scan, List <String> sequencia) {
+		
+		for (int i = 0; i < game; i++) {
+			int num = ReadInt(scan);
+			String formatted = formatter.format(num);
+			sequencia.add(formatted);
+		}
+	}
+	
 } 
